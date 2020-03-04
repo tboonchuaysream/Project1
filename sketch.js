@@ -35,6 +35,9 @@ var hummingbirdSound;
 
 //variables for fruit catch game
 var fruitDrop;
+var chipsDrop;
+var burgerDrop;
+var cokeDrop;
 var randomDropPosition;
 var status;
 var cheer;
@@ -98,6 +101,8 @@ function draw() {
 function keyPressed() {
 
 	//to register the diffent states and set variables that I do not want looped
+	//as soon as the user presses the different keys, the variables here will set the stage for that state
+	//these variables will stay static and will not be involved in the loop
  if(key == "d"){
  	
  	background(253, 235, 208);
@@ -136,10 +141,13 @@ function keyPressed() {
 	
 	//randomize the location that fruit drop from top of screen
  	fruitDrop = 0;
- 	randomDropPosition = random(1000);
- 	randomChipsPosition = random(1000);
- 	randomBurgerPosition = random(1000);
- 	randomCokePosition = random(1000);
+ 	chipsDrop = 0;
+ 	burgerDrop = 0;
+ 	cokeDrop = 0;
+ 	randomDropPosition = int(random(1000));
+ 	randomChipsPosition = int(random(1000));
+ 	randomBurgerPosition = int(random(1000));
+ 	randomCokePosition = int(random(1000));
 
  	status = "Catch the healthy food!";
 
@@ -199,7 +207,7 @@ function menu() {
   	rect(350,(heightIntervals*2)-30,300,60);
   	fill(0);
   	textSize(20);
- 	text('Press "d" to draw!', 500, heightIntervals*2);
+ 	text('Press d to draw!', 500, heightIntervals*2);
 
  	//number game button
  	textAlign(CENTER, CENTER);
@@ -207,7 +215,7 @@ function menu() {
   	rect(350,(heightIntervals*3)-30,300,60);
   	fill(0);
   	textSize(20);
- 	text('Press "n" to for Math game!', 500, heightIntervals*3);
+ 	text('Press n for Math game!', 500, heightIntervals*3);
 
  	//animal game button
  	textAlign(CENTER, CENTER);
@@ -215,7 +223,7 @@ function menu() {
   	rect(350,(heightIntervals*4)-30,300,60);
   	fill(0);
   	textSize(20);
- 	text('Press "a" to for animal facts!', 500, heightIntervals*4);
+ 	text('Press a for animal facts!', 500, heightIntervals*4);
 
  	//fruit catch game button
  	textAlign(CENTER, CENTER);
@@ -223,13 +231,13 @@ function menu() {
   	rect(350,(heightIntervals*5)-30,300,60);
   	fill(0);
   	textSize(20);
- 	text('Press "f" to catch fruits!', 500, heightIntervals*5);
+ 	text('Press f to catch fruits!', 500, heightIntervals*5);
 
  	//play or pause music
  	textAlign(RIGHT);
   	fill(0);
   	textSize(20);
- 	text('Press "p" to play/pause music', 990, 15);
+ 	text('Press p to play/pause music', 990, 15);
 
 }
 
@@ -319,12 +327,12 @@ function numberGame() {
  			textAlign(CENTER, CENTER);
  			fill(0);
   			textSize(20);
- 			text("CORRECT!", 500, heightIntervals*1);
+ 			text("CORRECT!!!", 500, heightIntervals*1);
  		} else if (numberResult != (numberOne + numberTwo)){
  			textAlign(CENTER, CENTER);
- 			fill(0);
+ 			fill(146, 43, 33);
   			textSize(20);
- 			text("WRONG!", 500, heightIntervals*1);
+ 			text("Try again", 500, heightIntervals*1);
  		}
  	}
 
@@ -343,9 +351,9 @@ function numberGame() {
  			text("CORRECT!", 500, heightIntervals*1);
  		} else if (numberResult == (numberOne + numberTwo)){
  			textAlign(CENTER, CENTER);
- 			fill(0);
+ 			fill(146, 43, 33);
   			textSize(20);
- 			text("WRONG!", 500, heightIntervals*1);
+ 			text("Try again", 500, heightIntervals*1);
  		}
  	}
 
@@ -472,19 +480,29 @@ function fruitCatchGame() {
  	text(status, width/2, heightIntervals*1);
 
 	fruitDrop = fruitDrop + 5;
+	chipsDrop = chipsDrop + 3;
+	burgerDrop = burgerDrop + 4;
+	cokeDrop = cokeDrop + 6;
 
-	image(chipsImg, randomChipsPosition, fruitDrop, 60, 60);
-	image(burgerImg, randomBurgerPosition, fruitDrop, 60, 60);
-	image(cokeImg, randomCokePosition, fruitDrop, 60, 60);
+	image(chipsImg, randomChipsPosition, chipsDrop, 60, 60);
+	image(burgerImg, randomBurgerPosition, burgerDrop, 60, 60);
+	image(cokeImg, randomCokePosition, cokeDrop, 60, 60);
 	image(appleImg, randomDropPosition, fruitDrop, 60, 60);
 
-	image(basketImg, mouseX, 530, 100, 60);
+	image(basketImg, mouseX, 550, 100, 60);
 
-	if(fruitDrop == 530 && (randomDropPosition > mouseX && randomDropPosition < (mouseX+100))) {
+	//checking what is hitting the basket and outputing a message
+	if(fruitDrop == 550 && (randomDropPosition > mouseX && randomDropPosition < (mouseX+100))) {
 		status = "Good job!";
 		cheerSound.play();
 	} else if (fruitDrop == 600 && (status != "Good job!")) {
 		status = "Oh no...";
+	} else if (chipsDrop == 552 && (randomChipsPosition > mouseX && randomChipsPosition < (mouseX+100))) {
+		status = "That is bad for you";
+	} else if (burgerDrop == 552 && (randomBurgerPosition > mouseX && randomBurgerPosition < (mouseX+100))) {
+		status = "That is bad for you";
+	} else if (cokeDrop == 552 && (randomCokePosition > mouseX && randomCokePosition < (mouseX+100))) {
+		status = "That is bad for you";
 	}
 
 }
